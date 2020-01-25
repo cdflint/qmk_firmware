@@ -27,7 +27,7 @@ enum tapdance_keycodes {
     TD_GUI_ML = 0,     // Tap dance key to switch to mouse layer _ML
     TD_LCTRL_TERM,
     TD_RCTRL_TERM,
-    TD_APP_LAUNCH,
+    TD_APP_LCSA,
 };
 
 enum ctrl_keycodes {
@@ -62,7 +62,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_GUI_ML]     = ACTION_TAP_DANCE_LAYER_TOGGLE(KC_LGUI, _ML),
     [TD_LCTRL_TERM] = ACTION_TAP_DANCE_DOUBLE(KC_LCTRL, LCA(KC_T)),
     [TD_RCTRL_TERM] = ACTION_TAP_DANCE_DOUBLE(KC_RCTRL, LCA(KC_T)),
-    [TD_APP_LAUNCH] = ACTION_TAP_DANCE_LAYER_TOGGLE(KC_APP, _AL),
+    [TD_APP_LCSA] = ACTION_TAP_DANCE_LAYER_TOGGLE(KC_APP, _LCSA),
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -82,7 +82,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB,            KC_Q,          KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC,   KC_RBRC, KC_BSLS,   KC_DEL,  KC_END,  KC_PGDN,
         KC_CAPS,           KC_A,          KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,   KC_ENT,
         KC_LSFT,           KC_Z,          KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_SFTENT,                             KC_UP,
-        KC_LCTRL, TD(TD_GUI_ML), KC_LALT,                   KC_SPC,                             KC_RALT, MO(_FL), TD(TD_APP_LAUNCH),   KC_RCTL,            KC_LEFT, KC_DOWN, KC_RGHT
+        KC_LCTRL, TD(TD_GUI_ML), KC_LALT,                   KC_SPC,                             KC_RALT, MO(_FL), TD(TD_APP_LCSA),   KC_RCTL,            KC_LEFT, KC_DOWN, KC_RGHT
     ),
     [_FL] = LAYOUT(
         _______, DM_PLY1, DM_PLY2, _______,  _______, DM_REC1, DM_REC2, _______,  _______,  DM_RSTP, _______, KC_WAKE, KC_SLEP,            KC_MUTE, _______, _______,
@@ -106,7 +106,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, MEH(KC_Q),  MEH(KC_W),  MEH(KC_E),  MEH(KC_R),  MEH(KC_T),  MEH(KC_Y),  MEH(KC_U),  MEH(KC_I),    MEH(KC_O),    MEH(KC_P),    MEH(KC_LBRC),   MEH(KC_RBRC), MEH(KC_BSLS),   MEH(KC_DEL),  MEH(KC_END),  MEH(KC_PGDN),
         _______, MEH(KC_A),  MEH(KC_S),  MEH(KC_D),  MEH(KC_F),  MEH(KC_G),  MEH(KC_H),  MEH(KC_J),  MEH(KC_K),    MEH(KC_L),    MEH(KC_SCLN), MEH(KC_QUOT),   MEH(KC_ENT),
         _______, MEH(KC_Z),  MEH(KC_X),  MEH(KC_C),  MEH(KC_V),  MEH(KC_B),  MEH(KC_N),  MEH(KC_M),  MEH(KC_COMM), MEH(KC_DOT),  MEH(KC_SLSH), MEH(KC_SFTENT),                                             MEH(KC_UP),
-        _______, _______,    _______,                MEH(KC_SPC),                                    _______,      _______,      TD(TD_APP_LAUNCH),      _______,                                      MEH(KC_LEFT), MEH(KC_DOWN), MEH(KC_RGHT)
+        _______, _______,    _______,                MEH(KC_SPC),                                    _______,      _______,      TD(TD_APP_LCSA),      _______,                                      MEH(KC_LEFT), MEH(KC_DOWN), MEH(KC_RGHT)
     ),
     /*
     [X] = LAYOUT(
