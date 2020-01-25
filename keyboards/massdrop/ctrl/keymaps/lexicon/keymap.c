@@ -51,8 +51,9 @@ enum layout_names {
     _KL=0,       // Keys Layout: The main keyboard layout that has all the characters
     _FL,         // Function Layout: The function key activated layout with default functions and some added ones
     _ML,         // Mouse Layout: Mouse Keys and mouse movement
-    _LCSA,        // Application Launcher: Layer for AHK script that will wrap Left Control + Shift + Alt around keys
-    _GL,         // GIT Layout: GIT shortcuts and macros
+    _LCSA,       // Application Launcher: Layer for AHK script that will wrap Left Control + Shift + Alt around keys
+    _GL,         // Game Layout: Disable gui key
+    _X,          // Lock Keyboard: Testing functionality to lock keyboard, disabling all keys but FN and ScrLK
     _YL,         // Yakuake Layout: Yakuake drop-down terminal shortcuts and macros
     _EL,         // KDE Layout: Shortcuts for KDE desktop using default KDE shortcuts settings
 };
@@ -85,7 +86,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LCTRL, TD(TD_GUI_ML), KC_LALT,                   KC_SPC,                             KC_RALT, MO(_FL), TD(TD_APP_LCSA),   KC_RCTL,            KC_LEFT, KC_DOWN, KC_RGHT
     ),
     [_FL] = LAYOUT(
-        _______, DM_PLY1, DM_PLY2, _______,  _______, DM_REC1, DM_REC2, _______,  _______,  DM_RSTP, _______, KC_WAKE, KC_SLEP,            KC_MUTE, _______, _______,
+        TG(_GL), DM_PLY1, DM_PLY2, _______,  _______, DM_REC1, DM_REC2, _______,  _______,  DM_RSTP, _______, KC_WAKE, KC_SLEP,            KC_MUTE, TG(_X), _______,
         _______, RGB_M_P, _______, _______,  _______, _______, _______, _______,  _______,  ROUT_FM, ROUT_TG, ROUT_VD, ROUT_VI, _______,   KC_MSTP, KC_MPLY, KC_VOLU,
         _______, RGB_SPD, RGB_VAI, RGB_SPI,  RGB_HUI, RGB_SAI, _______, U_T_AUTO, U_T_AGCR, _______, _______, _______, _______, _______,   KC_MPRV, KC_MNXT, KC_VOLD,
         _______, RGB_RMOD,RGB_VAD, RGB_MOD,  RGB_HUD, RGB_SAD, _______, _______,  _______,  _______, _______, _______, _______,
@@ -98,7 +99,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, KC_BTN1,       KC_MS_U, KC_BTN2, KC_WH_U, _______, _______, _______, _______, KC_KP_7, KC_KP_8, KC_KP_9, KC_PPLS, _______,   _______, _______, _______,
         _______, KC_MS_L,       KC_MS_D, KC_MS_R, KC_WH_D, _______, _______, _______, _______, KC_KP_4, KC_KP_5, KC_KP_6, KC_PENT,
         _______, _______,       _______, SEL_CPY, _______, _______, TG_NKRO, _______, _______, KC_KP_1, KC_KP_2, KC_KP_3,                              _______,
-        _______, TD(TD_GUI_ML), _______,                   KC_KP_0,                            _______, _______, TG(_ML), _______,            _______, _______, _______
+        _______, TD(TD_GUI_ML), _______,                   KC_KP_0,                            _______, _______, _______, _______,            _______, _______, _______
+    ),
+    [_GL] = LAYOUT(
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,            _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,                              _______,
+        _______, XXXXXXX, _______,                   _______,                            _______, _______, _______, _______,            _______, _______, _______
     ),
     [_LCSA] = LAYOUT(
         _______, MEH(KC_F1), MEH(KC_F2), MEH(KC_F3), MEH(KC_F4), MEH(KC_F5), MEH(KC_F6), MEH(KC_F7), MEH(KC_F8),   MEH(KC_F9),   MEH(KC_F10),  MEH(KC_F11),    MEH(KC_F12),                  MEH(KC_PSCR), MEH(KC_SLCK), MEH(KC_PAUS),
@@ -106,7 +115,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, MEH(KC_Q),  MEH(KC_W),  MEH(KC_E),  MEH(KC_R),  MEH(KC_T),  MEH(KC_Y),  MEH(KC_U),  MEH(KC_I),    MEH(KC_O),    MEH(KC_P),    MEH(KC_LBRC),   MEH(KC_RBRC), MEH(KC_BSLS),   MEH(KC_DEL),  MEH(KC_END),  MEH(KC_PGDN),
         _______, MEH(KC_A),  MEH(KC_S),  MEH(KC_D),  MEH(KC_F),  MEH(KC_G),  MEH(KC_H),  MEH(KC_J),  MEH(KC_K),    MEH(KC_L),    MEH(KC_SCLN), MEH(KC_QUOT),   MEH(KC_ENT),
         _______, MEH(KC_Z),  MEH(KC_X),  MEH(KC_C),  MEH(KC_V),  MEH(KC_B),  MEH(KC_N),  MEH(KC_M),  MEH(KC_COMM), MEH(KC_DOT),  MEH(KC_SLSH), MEH(KC_SFTENT),                                             MEH(KC_UP),
-        _______, _______,    _______,                MEH(KC_SPC),                                    _______,      _______,      TD(TD_APP_LCSA),      _______,                                      MEH(KC_LEFT), MEH(KC_DOWN), MEH(KC_RGHT)
+        _______, _______,    _______,                MEH(KC_SPC),                                    _______,      _______,      TD(TD_APP_LCSA),      _______,                              MEH(KC_LEFT), MEH(KC_DOWN), MEH(KC_RGHT)
+    ),
+    [_X] = LAYOUT(
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,            XXXXXXX, _______, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                              XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX,                            XXXXXXX, _______, XXXXXXX, XXXXXXX,            XXXXXXX, XXXXXXX, XXXXXXX
     ),
     /*
     [X] = LAYOUT(
@@ -526,40 +543,40 @@ void rgb_matrix_indicators_user(void) {
                 rgb_matrix_set_color(5, 0x45, 0xb8, 0x66);
                 rgb_matrix_set_color(6, 0x45, 0xb8, 0x66);
                 rgb_matrix_set_color(9, 0x45, 0xb8, 0x66);
-                // Underglow key. Color code #a59c18
-                rgb_matrix_set_color(87, 0xa5, 0x9c, 0x18);
-                rgb_matrix_set_color(88, 0xa5, 0x9c, 0x18);
-                rgb_matrix_set_color(89, 0xa5, 0x9c, 0x18);
-                rgb_matrix_set_color(90, 0xa5, 0x9c, 0x18);
-                rgb_matrix_set_color(91, 0xa5, 0x9c, 0x18);
-                rgb_matrix_set_color(92, 0xa5, 0x9c, 0x18);
-                rgb_matrix_set_color(93, 0xa5, 0x9c, 0x18);
-                rgb_matrix_set_color(94, 0xa5, 0x9c, 0x18);
-                rgb_matrix_set_color(95, 0xa5, 0x9c, 0x18);
-                rgb_matrix_set_color(96, 0xa5, 0x9c, 0x18);
-                rgb_matrix_set_color(97, 0xa5, 0x9c, 0x18);
-                rgb_matrix_set_color(98, 0xa5, 0x9c, 0x18);
-                rgb_matrix_set_color(99, 0xa5, 0x9c, 0x18);
-                rgb_matrix_set_color(100, 0xa5, 0x9c, 0x18);
-                rgb_matrix_set_color(101, 0xa5, 0x9c, 0x18);
-                rgb_matrix_set_color(102, 0xa5, 0x9c, 0x18);
-                rgb_matrix_set_color(103, 0xa5, 0x9c, 0x18);
-                rgb_matrix_set_color(104, 0xa5, 0x9c, 0x18);
-                rgb_matrix_set_color(105, 0xa5, 0x9c, 0x18);
-                rgb_matrix_set_color(106, 0xa5, 0x9c, 0x18);
-                rgb_matrix_set_color(107, 0xa5, 0x9c, 0x18);
-                rgb_matrix_set_color(108, 0xa5, 0x9c, 0x18);
-                rgb_matrix_set_color(109, 0xa5, 0x9c, 0x18);
-                rgb_matrix_set_color(110, 0xa5, 0x9c, 0x18);
-                rgb_matrix_set_color(111, 0xa5, 0x9c, 0x18);
-                rgb_matrix_set_color(112, 0xa5, 0x9c, 0x18);
-                rgb_matrix_set_color(113, 0xa5, 0x9c, 0x18);
-                rgb_matrix_set_color(114, 0xa5, 0x9c, 0x18);
-                rgb_matrix_set_color(115, 0xa5, 0x9c, 0x18);
-                rgb_matrix_set_color(116, 0xa5, 0x9c, 0x18);
-                rgb_matrix_set_color(117, 0xa5, 0x9c, 0x18);
-                rgb_matrix_set_color(118, 0xa5, 0x9c, 0x18);
-                rgb_matrix_set_color(119, 0xa5, 0x9c, 0x18);
+                // Underglow key. Color code #2f07a6
+                rgb_matrix_set_color(87, 0x2f, 0x07, 0xa6);
+                rgb_matrix_set_color(88, 0x2f, 0x07, 0xa6);
+                rgb_matrix_set_color(89, 0x2f, 0x07, 0xa6);
+                rgb_matrix_set_color(90, 0x2f, 0x07, 0xa6);
+                rgb_matrix_set_color(91, 0x2f, 0x07, 0xa6);
+                rgb_matrix_set_color(92, 0x2f, 0x07, 0xa6);
+                rgb_matrix_set_color(93, 0x2f, 0x07, 0xa6);
+                rgb_matrix_set_color(94, 0x2f, 0x07, 0xa6);
+                rgb_matrix_set_color(95, 0x2f, 0x07, 0xa6);
+                rgb_matrix_set_color(96, 0x2f, 0x07, 0xa6);
+                rgb_matrix_set_color(97, 0x2f, 0x07, 0xa6);
+                rgb_matrix_set_color(98, 0x2f, 0x07, 0xa6);
+                rgb_matrix_set_color(99, 0x2f, 0x07, 0xa6);
+                rgb_matrix_set_color(100, 0x2f, 0x07, 0xa6);
+                rgb_matrix_set_color(101, 0x2f, 0x07, 0xa6);
+                rgb_matrix_set_color(102, 0x2f, 0x07, 0xa6);
+                rgb_matrix_set_color(103, 0x2f, 0x07, 0xa6);
+                rgb_matrix_set_color(104, 0x2f, 0x07, 0xa6);
+                rgb_matrix_set_color(105, 0x2f, 0x07, 0xa6);
+                rgb_matrix_set_color(106, 0x2f, 0x07, 0xa6);
+                rgb_matrix_set_color(107, 0x2f, 0x07, 0xa6);
+                rgb_matrix_set_color(108, 0x2f, 0x07, 0xa6);
+                rgb_matrix_set_color(109, 0x2f, 0x07, 0xa6);
+                rgb_matrix_set_color(110, 0x2f, 0x07, 0xa6);
+                rgb_matrix_set_color(111, 0x2f, 0x07, 0xa6);
+                rgb_matrix_set_color(112, 0x2f, 0x07, 0xa6);
+                rgb_matrix_set_color(113, 0x2f, 0x07, 0xa6);
+                rgb_matrix_set_color(114, 0x2f, 0x07, 0xa6);
+                rgb_matrix_set_color(115, 0x2f, 0x07, 0xa6);
+                rgb_matrix_set_color(116, 0x2f, 0x07, 0xa6);
+                rgb_matrix_set_color(117, 0x2f, 0x07, 0xa6);
+                rgb_matrix_set_color(118, 0x2f, 0x07, 0xa6);
+                rgb_matrix_set_color(119, 0x2f, 0x07, 0xa6);
             }
             break;
             case _ML: {
@@ -651,6 +668,91 @@ void rgb_matrix_indicators_user(void) {
                 rgb_matrix_set_color(119, 0x40, 0xf2, 0xb1);
             }
             break;
+            case _GL: {
+                /*
+                [_GL] = LAYOUT(
+                    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,            _______, _______, _______,
+                    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   _______, _______, _______,
+                    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   _______, _______, _______,
+                    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+                    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,                              _______,
+                    _______, XXXXXXX, _______,                   _______,                            _______, _______, _______, _______,            _______, _______, _______
+                ),
+                */
+                // GUI off. Color code #000000
+                rgb_matrix_set_color(77, 0x00, 0x00, 0x00);
+                // WASD key. Color code #ff2600
+                rgb_matrix_set_color(35, 0xff, 0x26, 0x00);
+                rgb_matrix_set_color(51, 0xff, 0x26, 0x00);
+                rgb_matrix_set_color(52, 0xff, 0x26, 0x00);
+                rgb_matrix_set_color(53, 0xff, 0x26, 0x00);
+                // QERFG. Color code #2b60ab
+                rgb_matrix_set_color(34, 0x2b, 0x60, 0xab);
+                rgb_matrix_set_color(36, 0x2b, 0x60, 0xab);
+                rgb_matrix_set_color(37, 0x2b, 0x60, 0xab);
+                rgb_matrix_set_color(54, 0x2b, 0x60, 0xab);
+                rgb_matrix_set_color(55, 0x2b, 0x60, 0xab);
+                // ZXCV. Color code #602bab
+                rgb_matrix_set_color(64, 0x60, 0x2b, 0xab);
+                rgb_matrix_set_color(65, 0x60, 0x2b, 0xab);
+                rgb_matrix_set_color(66, 0x60, 0x2b, 0xab);
+                rgb_matrix_set_color(67, 0x60, 0x2b, 0xab);
+                // UIOJKLM. Color code #a7ddd9
+                rgb_matrix_set_color(40, 0xa7, 0xdd, 0xd9);
+                rgb_matrix_set_color(41, 0xa7, 0xdd, 0xd9);
+                rgb_matrix_set_color(42, 0xa7, 0xdd, 0xd9);
+                rgb_matrix_set_color(57, 0xa7, 0xdd, 0xd9);
+                rgb_matrix_set_color(58, 0xa7, 0xdd, 0xd9);
+                rgb_matrix_set_color(59, 0xa7, 0xdd, 0xd9);
+                rgb_matrix_set_color(70, 0xa7, 0xdd, 0xd9);
+                // 123456. Color code #eeff2e
+                rgb_matrix_set_color(17, 0xee, 0xff, 0x2e);
+                rgb_matrix_set_color(18, 0xee, 0xff, 0x2e);
+                rgb_matrix_set_color(19, 0xee, 0xff, 0x2e);
+                rgb_matrix_set_color(20, 0xee, 0xff, 0x2e);
+                rgb_matrix_set_color(21, 0xee, 0xff, 0x2e);
+                rgb_matrix_set_color(22, 0xee, 0xff, 0x2e);
+                // Tab, Shift, Ctrl, Alt, Space #ffab2e
+                rgb_matrix_set_color(69, 0xff, 0xab, 0x2e);
+                rgb_matrix_set_color(69, 0xff, 0xab, 0x2e);
+                rgb_matrix_set_color(69, 0xff, 0xab, 0x2e);
+                rgb_matrix_set_color(69, 0xff, 0xab, 0x2e);
+                rgb_matrix_set_color(69, 0xff, 0xab, 0x2e);
+                // Underglow key. Color code #07d51f
+                rgb_matrix_set_color(87, 0x07, 0xd5, 0x1f);
+                rgb_matrix_set_color(88, 0x07, 0xd5, 0x1f);
+                rgb_matrix_set_color(89, 0x07, 0xd5, 0x1f);
+                rgb_matrix_set_color(90, 0x07, 0xd5, 0x1f);
+                rgb_matrix_set_color(91, 0x07, 0xd5, 0x1f);
+                rgb_matrix_set_color(92, 0x07, 0xd5, 0x1f);
+                rgb_matrix_set_color(93, 0x07, 0xd5, 0x1f);
+                rgb_matrix_set_color(94, 0x07, 0xd5, 0x1f);
+                rgb_matrix_set_color(95, 0x07, 0xd5, 0x1f);
+                rgb_matrix_set_color(96, 0x07, 0xd5, 0x1f);
+                rgb_matrix_set_color(97, 0x07, 0xd5, 0x1f);
+                rgb_matrix_set_color(98, 0x07, 0xd5, 0x1f);
+                rgb_matrix_set_color(99, 0x07, 0xd5, 0x1f);
+                rgb_matrix_set_color(100, 0x07, 0xd5, 0x1f);
+                rgb_matrix_set_color(101, 0x07, 0xd5, 0x1f);
+                rgb_matrix_set_color(102, 0x07, 0xd5, 0x1f);
+                rgb_matrix_set_color(103, 0x07, 0xd5, 0x1f);
+                rgb_matrix_set_color(104, 0x07, 0xd5, 0x1f);
+                rgb_matrix_set_color(105, 0x07, 0xd5, 0x1f);
+                rgb_matrix_set_color(106, 0x07, 0xd5, 0x1f);
+                rgb_matrix_set_color(107, 0x07, 0xd5, 0x1f);
+                rgb_matrix_set_color(108, 0x07, 0xd5, 0x1f);
+                rgb_matrix_set_color(109, 0x07, 0xd5, 0x1f);
+                rgb_matrix_set_color(110, 0x07, 0xd5, 0x1f);
+                rgb_matrix_set_color(111, 0x07, 0xd5, 0x1f);
+                rgb_matrix_set_color(112, 0x07, 0xd5, 0x1f);
+                rgb_matrix_set_color(113, 0x07, 0xd5, 0x1f);
+                rgb_matrix_set_color(114, 0x07, 0xd5, 0x1f);
+                rgb_matrix_set_color(115, 0x07, 0xd5, 0x1f);
+                rgb_matrix_set_color(116, 0x07, 0xd5, 0x1f);
+                rgb_matrix_set_color(117, 0x07, 0xd5, 0x1f);
+                rgb_matrix_set_color(118, 0x07, 0xd5, 0x1f);
+                rgb_matrix_set_color(119, 0x07, 0xd5, 0x1f);
+            } break;
             case _LCSA: {
                 /*
                 [_ML] = LAYOUT(
@@ -663,40 +765,87 @@ void rgb_matrix_indicators_user(void) {
                 ),
                 */
 
-                // Underglow key. Color code #40baf2
-                rgb_matrix_set_color(87, 0x40, 0xba, 0xf2);
-                rgb_matrix_set_color(88, 0x40, 0xba, 0xf2);
-                rgb_matrix_set_color(89, 0x40, 0xba, 0xf2);
-                rgb_matrix_set_color(90, 0x40, 0xba, 0xf2);
-                rgb_matrix_set_color(91, 0x40, 0xba, 0xf2);
-                rgb_matrix_set_color(92, 0x40, 0xba, 0xf2);
-                rgb_matrix_set_color(93, 0x40, 0xba, 0xf2);
-                rgb_matrix_set_color(94, 0x40, 0xba, 0xf2);
-                rgb_matrix_set_color(95, 0x40, 0xba, 0xf2);
-                rgb_matrix_set_color(96, 0x40, 0xba, 0xf2);
-                rgb_matrix_set_color(97, 0x40, 0xba, 0xf2);
-                rgb_matrix_set_color(98, 0x40, 0xba, 0xf2);
-                rgb_matrix_set_color(99, 0x40, 0xba, 0xf2);
-                rgb_matrix_set_color(100, 0x40, 0xba, 0xf2);
-                rgb_matrix_set_color(101, 0x40, 0xba, 0xf2);
-                rgb_matrix_set_color(102, 0x40, 0xba, 0xf2);
-                rgb_matrix_set_color(103, 0x40, 0xba, 0xf2);
-                rgb_matrix_set_color(104, 0x40, 0xba, 0xf2);
-                rgb_matrix_set_color(105, 0x40, 0xba, 0xf2);
-                rgb_matrix_set_color(106, 0x40, 0xba, 0xf2);
-                rgb_matrix_set_color(107, 0x40, 0xba, 0xf2);
-                rgb_matrix_set_color(108, 0x40, 0xba, 0xf2);
-                rgb_matrix_set_color(109, 0x40, 0xba, 0xf2);
-                rgb_matrix_set_color(110, 0x40, 0xba, 0xf2);
-                rgb_matrix_set_color(111, 0x40, 0xba, 0xf2);
-                rgb_matrix_set_color(112, 0x40, 0xba, 0xf2);
-                rgb_matrix_set_color(113, 0x40, 0xba, 0xf2);
-                rgb_matrix_set_color(114, 0x40, 0xba, 0xf2);
-                rgb_matrix_set_color(115, 0x40, 0xba, 0xf2);
-                rgb_matrix_set_color(116, 0x40, 0xba, 0xf2);
-                rgb_matrix_set_color(117, 0x40, 0xba, 0xf2);
-                rgb_matrix_set_color(118, 0x40, 0xba, 0xf2);
-                rgb_matrix_set_color(119, 0x40, 0xba, 0xf2);
+                // Underglow key. Color code #e1be23
+                rgb_matrix_set_color(87, 0xe1, 0xbe, 0x23);
+                rgb_matrix_set_color(88, 0xe1, 0xbe, 0x23);
+                rgb_matrix_set_color(89, 0xe1, 0xbe, 0x23);
+                rgb_matrix_set_color(90, 0xe1, 0xbe, 0x23);
+                rgb_matrix_set_color(91, 0xe1, 0xbe, 0x23);
+                rgb_matrix_set_color(92, 0xe1, 0xbe, 0x23);
+                rgb_matrix_set_color(93, 0xe1, 0xbe, 0x23);
+                rgb_matrix_set_color(94, 0xe1, 0xbe, 0x23);
+                rgb_matrix_set_color(95, 0xe1, 0xbe, 0x23);
+                rgb_matrix_set_color(96, 0xe1, 0xbe, 0x23);
+                rgb_matrix_set_color(97, 0xe1, 0xbe, 0x23);
+                rgb_matrix_set_color(98, 0xe1, 0xbe, 0x23);
+                rgb_matrix_set_color(99, 0xe1, 0xbe, 0x23);
+                rgb_matrix_set_color(100, 0xe1, 0xbe, 0x23);
+                rgb_matrix_set_color(101, 0xe1, 0xbe, 0x23);
+                rgb_matrix_set_color(102, 0xe1, 0xbe, 0x23);
+                rgb_matrix_set_color(103, 0xe1, 0xbe, 0x23);
+                rgb_matrix_set_color(104, 0xe1, 0xbe, 0x23);
+                rgb_matrix_set_color(105, 0xe1, 0xbe, 0x23);
+                rgb_matrix_set_color(106, 0xe1, 0xbe, 0x23);
+                rgb_matrix_set_color(107, 0xe1, 0xbe, 0x23);
+                rgb_matrix_set_color(108, 0xe1, 0xbe, 0x23);
+                rgb_matrix_set_color(109, 0xe1, 0xbe, 0x23);
+                rgb_matrix_set_color(110, 0xe1, 0xbe, 0x23);
+                rgb_matrix_set_color(111, 0xe1, 0xbe, 0x23);
+                rgb_matrix_set_color(112, 0xe1, 0xbe, 0x23);
+                rgb_matrix_set_color(113, 0xe1, 0xbe, 0x23);
+                rgb_matrix_set_color(114, 0xe1, 0xbe, 0x23);
+                rgb_matrix_set_color(115, 0xe1, 0xbe, 0x23);
+                rgb_matrix_set_color(116, 0xe1, 0xbe, 0x23);
+                rgb_matrix_set_color(117, 0xe1, 0xbe, 0x23);
+                rgb_matrix_set_color(118, 0xe1, 0xbe, 0x23);
+                rgb_matrix_set_color(119, 0xe1, 0xbe, 0x23);
+            } break;
+            case _X: {
+                /*
+                [_ML] = LAYOUT(
+                    _______, KC_ACL0,       KC_ACL1, KC_ACL2, _______, _______, _______, _______, _______, _______, _______, _______, _______,            _______, _______, _______,
+                    _______, KC_BTN4,       KC_BTN3, KC_BTN5, _______, _______, _______, _______, _______, _______, KC_PSLS, KC_PAST, KC_PMNS, _______,   _______, _______, _______,
+                    _______, KC_BTN1,       KC_MS_U, KC_BTN2, KC_WH_U, _______, _______, _______, _______, KC_KP_7, KC_KP_8, KC_KP_9, KC_PPLS, _______,   _______, _______, _______,
+                    _______, KC_MS_L,       KC_MS_D, KC_MS_R, KC_WH_D, _______, _______, _______, _______, KC_KP_4, KC_KP_5, KC_KP_6, KC_PENT,
+                    _______, _______,       _______, SEL_CPY, _______, _______, TG_NKRO, _______, _______, KC_KP_1, KC_KP_2, KC_KP_3,                              _______,
+                    _______, TD(TD_GUI_ML), _______,                   KC_KP_0,                            _______, _______, TG(_ML), _______,            _______, _______, _______
+                ),
+                */
+
+                // Underglow key. Color code #383838
+                rgb_matrix_set_color(87, 0x38, 0x38, 0x38);
+                rgb_matrix_set_color(88, 0x38, 0x38, 0x38);
+                rgb_matrix_set_color(89, 0x38, 0x38, 0x38);
+                rgb_matrix_set_color(90, 0x38, 0x38, 0x38);
+                rgb_matrix_set_color(91, 0x38, 0x38, 0x38);
+                rgb_matrix_set_color(92, 0x38, 0x38, 0x38);
+                rgb_matrix_set_color(93, 0x38, 0x38, 0x38);
+                rgb_matrix_set_color(94, 0x38, 0x38, 0x38);
+                rgb_matrix_set_color(95, 0x38, 0x38, 0x38);
+                rgb_matrix_set_color(96, 0x38, 0x38, 0x38);
+                rgb_matrix_set_color(97, 0x38, 0x38, 0x38);
+                rgb_matrix_set_color(98, 0x38, 0x38, 0x38);
+                rgb_matrix_set_color(99, 0x38, 0x38, 0x38);
+                rgb_matrix_set_color(100, 0x38, 0x38, 0x38);
+                rgb_matrix_set_color(101, 0x38, 0x38, 0x38);
+                rgb_matrix_set_color(102, 0x38, 0x38, 0x38);
+                rgb_matrix_set_color(103, 0x38, 0x38, 0x38);
+                rgb_matrix_set_color(104, 0x38, 0x38, 0x38);
+                rgb_matrix_set_color(105, 0x38, 0x38, 0x38);
+                rgb_matrix_set_color(106, 0x38, 0x38, 0x38);
+                rgb_matrix_set_color(107, 0x38, 0x38, 0x38);
+                rgb_matrix_set_color(108, 0x38, 0x38, 0x38);
+                rgb_matrix_set_color(109, 0x38, 0x38, 0x38);
+                rgb_matrix_set_color(110, 0x38, 0x38, 0x38);
+                rgb_matrix_set_color(111, 0x38, 0x38, 0x38);
+                rgb_matrix_set_color(112, 0x38, 0x38, 0x38);
+                rgb_matrix_set_color(113, 0x38, 0x38, 0x38);
+                rgb_matrix_set_color(114, 0x38, 0x38, 0x38);
+                rgb_matrix_set_color(115, 0x38, 0x38, 0x38);
+                rgb_matrix_set_color(116, 0x38, 0x38, 0x38);
+                rgb_matrix_set_color(117, 0x38, 0x38, 0x38);
+                rgb_matrix_set_color(118, 0x38, 0x38, 0x38);
+                rgb_matrix_set_color(119, 0x38, 0x38, 0x38);
             } break;
         }
 	}
