@@ -75,4 +75,4 @@ id_rsa_*
 __pycache__
 
 # ignore lib dir
-lib/
+/lib/*
